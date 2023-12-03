@@ -3,13 +3,9 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/astro-decap-cms-oauth.d.ts",
-			"import": "./dist/astro-decap-cms-oauth.js",
-			"require": "./dist/astro-decap-cms-oauth.umd.cjs"
-		},
-		"./src/oauth/callback.ts": "./src/oauth/callback.ts",
-		"./src/oauth/index.ts": "./src/oauth/index.ts",
-		"./src/admin.astro": "./src/admin.astro"
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
 	},
 	"scripts": {
 		"build": "tsc"
