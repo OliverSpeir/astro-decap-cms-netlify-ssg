@@ -1,0 +1,28 @@
+{
+	"name": "astro-decap-cms-netlify-ssg",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/astro-decap-cms-oauth.d.ts",
+			"import": "./dist/astro-decap-cms-oauth.js",
+			"require": "./dist/astro-decap-cms-oauth.umd.cjs"
+		},
+		"./src/oauth/callback.ts": "./src/oauth/callback.ts",
+		"./src/oauth/index.ts": "./src/oauth/index.ts",
+		"./src/admin.astro": "./src/admin.astro"
+	},
+	"scripts": {
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@types/node": "^20.10.2",
+		"@types/react": "^17.0.0",
+		"typescript": "^5.3.2",
+		"vite": "^5.0.4",
+		"vite-plugin-dts": "^3.6.4"
+	},
+	"peerDependencies": {
+		"astro": "^2.0.0 || ^3.0.0"
+	}
+}
