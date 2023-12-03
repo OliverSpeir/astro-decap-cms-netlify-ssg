@@ -8,4 +8,4 @@ export interface DecapCMSOptions {
     templates?: string;
     injectWidget?: boolean;
 }
-export default function decapCMS(options: DecapCMSOptions): AstroIntegration;
+export default function decapCMS(options?: DecapCMSOptions): AstroIntegration;
