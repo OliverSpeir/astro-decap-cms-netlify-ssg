@@ -20,7 +20,7 @@ const defaultOptions: DecapCMSOptions = {
   injectWidget: true,
 };
 
-export default function decapCMS(options: DecapCMSOptions): AstroIntegration {
+export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
   const { adminRoute, config, styles, templates, injectWidget } = {
     ...defaultOptions,
     ...options,
