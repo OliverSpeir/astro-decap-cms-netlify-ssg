@@ -35,25 +35,34 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
           entryPoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
         });
         // 2. inject indetity widget
+        // this should only be injected to / ( root of website )
+        // adds a script in this way for performance reasons ( module makes inline script )
         if (injectWidget) {
           injectScript(
-            "head-inline",
+            "page",
             `
-          <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+            var script = document.createElement('script');
+            script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+            document.head.appendChild(script);
         `
           );
         }
         // 3. inject styles
+        // this should only be injected to /admin
+        // styles is path to public css file 
+        // ideally would be able to get a way to get the styles astro applies to the page where the .md content is used 
         if (styles) {
           injectScript(
             "page",
-            `
-          <script>CMS.registerPreviewStyle(${styles});</script>
-          `
+            `<script>CMS.registerPreviewStyle(${styles});</script>`
           );
         }
         // 4. inject templates
+        // should only be injected to /admin
         // hardcoded for now
+        // ideally would be able to build this createClass function programatically 
+        //  e.g accept and object of the widgets you want to add and classes you need applied to them 
+        // applying prose class only necessary for tailwind typography
         if (templates) {
           injectScript(
             "page",
@@ -71,7 +80,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
         }
       },
       // 4. create config
-      // not working yet
+      // creates file yaml at /admin/config.yml from object passed to the integration
       "astro:build:done": async ({ dir }) => {
         if (config) {
           function convertConfigToYaml(configObj: CmsConfig) {
@@ -82,12 +91,14 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
               return null;
             }
           }
-      
+
           try {
             const yamlContent = convertConfigToYaml(config);
             if (yamlContent) {
-              const outputPath = fileURLToPath(new URL("./admin/config.yml", dir));
-              await writeFile(outputPath, yamlContent, 'utf8');
+              const outputPath = fileURLToPath(
+                new URL("./admin/config.yml", dir)
+              );
+              await writeFile(outputPath, yamlContent, "utf8");
               console.log("config.yml file created successfully in /dist");
             } else {
               console.error("Failed to convert config to YAML.");

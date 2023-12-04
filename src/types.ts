@@ -1,5 +1,6 @@
+// type taken from decap-cms directly ( slightly modified )
 export interface CmsBackend {
-  name: "git-gateway";
+  name: "git-gateway"; // this integration only works with git-gateway
   auth_scope?: CmsAuthScope;
   open_authoring?: boolean;
   always_fork?: boolean;
