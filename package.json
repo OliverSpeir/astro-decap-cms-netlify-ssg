@@ -13,8 +13,7 @@
 	},
 	"devDependencies": {
 		"@types/js-yaml": "^4.0.9",
-		"@types/node": "^20.10.3",
-		"astro": "^3.6.4"
+		"@types/node": "^20.10.3"
 	},
 	"peerDependencies": {
 		"astro": "^2.0.0 || ^3.0.0"
