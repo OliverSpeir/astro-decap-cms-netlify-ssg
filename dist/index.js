@@ -8,8 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { writeFile } from "node:fs/promises";
-// const { writeFile } = await import('node:fs/promises');
-// const { fileURLToPath } = await import('node:url');
 import { fileURLToPath } from "node:url";
 ;
 const defaultOptions = {

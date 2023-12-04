@@ -1,10 +1,6 @@
-
-
 import type { AstroIntegration } from "astro";
 import type { CmsConfig } from "decap-cms-core";
 import { writeFile } from "node:fs/promises"
-// const { writeFile } = await import('node:fs/promises');
-// const { fileURLToPath } = await import('node:url');
 import { fileURLToPath } from "node:url";
 
 export interface DecapCMSOptions {
