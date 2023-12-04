@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import type { CmsConfig } from "decap-cms-core";
+import type { CmsConfig } from "decap-cms-config";
 export interface DecapCMSOptions {
     adminRoute?: string;
     config?: CmsConfig;

@@ -1,4 +1,4 @@
-declare module 'decap-cms-core' {
+declare module 'decap-cms-config' {
 
 
 interface CmsBackend {

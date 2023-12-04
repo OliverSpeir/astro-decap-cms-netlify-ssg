@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import type { CmsConfig } from "decap-cms-core";
+import type { CmsConfig } from "decap-cms-config";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
