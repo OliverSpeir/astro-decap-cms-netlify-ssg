@@ -1,7 +1,8 @@
 import type { AstroIntegration } from "astro";
 import type { CmsConfig } from "decap-cms-core";
-import { writeFile } from "node:fs/promises"
+import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { dump } from "js-yaml";
 
 export interface DecapCMSOptions {
   adminRoute?: string;
@@ -9,7 +10,7 @@ export interface DecapCMSOptions {
   styles?: string;
   templates?: string;
   injectWidget?: boolean;
-};
+}
 
 const defaultOptions: DecapCMSOptions = {
   adminRoute: "/admin",
@@ -71,14 +72,26 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
       },
       // 4. create config
       // not working yet
-      "astro:build:done": ({ dir }) => {
+      "astro:build:done": async ({ dir }) => {
         if (config) {
-          const configContent = `# Your config.yml content here`;
-          
+          function convertConfigToYaml(configObj: CmsConfig) {
+            try {
+              return dump(configObj);
+            } catch (e) {
+              console.error(e);
+              return null;
+            }
+          }
+      
           try {
-            const outputPath = fileURLToPath(new URL("./config.yml", dir));
-            writeFile(outputPath, configContent);
-            console.log("config.yml file created successfully in /dist");
+            const yamlContent = convertConfigToYaml(config);
+            if (yamlContent) {
+              const outputPath = fileURLToPath(new URL("./admin/config.yml", dir));
+              await writeFile(outputPath, yamlContent, 'utf8');
+              console.log("config.yml file created successfully in /dist");
+            } else {
+              console.error("Failed to convert config to YAML.");
+            }
           } catch (error) {
             console.error("Error writing config.yml:", error);
           }

@@ -1,6 +1,15 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-;
+import { dump } from "js-yaml";
 const defaultOptions = {
     adminRoute: "/admin",
     injectWidget: true,
@@ -48,19 +57,33 @@ export default function decapCMS(options) {
             },
             // 4. create config
             // not working yet
-            "astro:build:done": ({ dir }) => {
+            "astro:build:done": ({ dir }) => __awaiter(this, void 0, void 0, function* () {
                 if (config) {
-                    const configContent = `# Your config.yml content here`;
+                    function convertConfigToYaml(configObj) {
+                        try {
+                            return dump(configObj);
+                        }
+                        catch (e) {
+                            console.error(e);
+                            return null;
+                        }
+                    }
                     try {
-                        const outputPath = fileURLToPath(new URL("./config.yml", dir));
-                        writeFile(outputPath, configContent);
-                        console.log("config.yml file created successfully in /dist");
+                        const yamlContent = convertConfigToYaml(config);
+                        if (yamlContent) {
+                            const outputPath = fileURLToPath(new URL("./admin/config.yml", dir));
+                            yield writeFile(outputPath, yamlContent, 'utf8');
+                            console.log("config.yml file created successfully in /dist");
+                        }
+                        else {
+                            console.error("Failed to convert config to YAML.");
+                        }
                     }
                     catch (error) {
                         console.error("Error writing config.yml:", error);
                     }
                 }
-            },
+            }),
         },
     };
 }
