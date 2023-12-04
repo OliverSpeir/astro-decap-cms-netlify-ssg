@@ -1,4 +1,3 @@
-/// <reference path="../src/types.d.ts" />
 import type { AstroIntegration } from "astro";
 import type { CmsConfig } from "decap-cms-core";
 export interface DecapCMSOptions {

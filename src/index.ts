@@ -28,7 +28,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
     name: "decap-cms",
     hooks: {
       // 1. inject admin route
-      "astro:config:setup": async ({ injectRoute, injectScript }) => {
+      "astro:config:setup": ({ injectRoute, injectScript }) => {
         injectRoute({
           pattern: adminRoute,
           entryPoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
@@ -71,13 +71,13 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
       },
       // 4. create config
       // not working yet
-      "astro:build:done": async ({ dir }) => {
+      "astro:build:done": ({ dir }) => {
         if (config) {
           const configContent = `# Your config.yml content here`;
           
           try {
             const outputPath = fileURLToPath(new URL("./config.yml", dir));
-            await writeFile(outputPath, configContent);
+            writeFile(outputPath, configContent);
             console.log("config.yml file created successfully in /dist");
           } catch (error) {
             console.error("Error writing config.yml:", error);

@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 ;
@@ -23,7 +14,7 @@ export default function decapCMS(options) {
         name: "decap-cms",
         hooks: {
             // 1. inject admin route
-            "astro:config:setup": ({ injectRoute, injectScript }) => __awaiter(this, void 0, void 0, function* () {
+            "astro:config:setup": ({ injectRoute, injectScript }) => {
                 injectRoute({
                     pattern: adminRoute,
                     entryPoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
@@ -54,22 +45,22 @@ export default function decapCMS(options) {
           CMS.registerPreviewTemplate("blog", CustomPreview);</script>
           `);
                 }
-            }),
+            },
             // 4. create config
             // not working yet
-            "astro:build:done": ({ dir }) => __awaiter(this, void 0, void 0, function* () {
+            "astro:build:done": ({ dir }) => {
                 if (config) {
                     const configContent = `# Your config.yml content here`;
                     try {
                         const outputPath = fileURLToPath(new URL("./config.yml", dir));
-                        yield writeFile(outputPath, configContent);
+                        writeFile(outputPath, configContent);
                         console.log("config.yml file created successfully in /dist");
                     }
                     catch (error) {
                         console.error("Error writing config.yml:", error);
                     }
                 }
-            }),
+            },
         },
     };
 }
