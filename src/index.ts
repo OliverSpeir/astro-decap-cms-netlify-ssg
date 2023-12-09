@@ -32,7 +32,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
       "astro:config:setup": ({ injectRoute, injectScript }) => {
         injectRoute({
           pattern: adminRoute,
-          entryPoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
+          entrypoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
         });
         // 2. inject indetity widget
         // this should only be injected to / ( root of website )
@@ -54,7 +54,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
         if (styles) {
           injectScript(
             "page",
-            `<script>CMS.registerPreviewStyle(${styles});</script>`
+            `CMS.registerPreviewStyle(${styles});`
           );
         }
         // 4. inject templates
@@ -67,14 +67,13 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
           injectScript(
             "page",
             `
-          <script>
           var CustomPreview = createClass({
             render: function () {
               var entry = this.props.entry;
               return h("div", { className: "prose" }, this.props.widgetFor("body"));
             },
           });
-          CMS.registerPreviewTemplate("blog", CustomPreview);</script>
+          CMS.registerPreviewTemplate("blog", CustomPreview);
           `
           );
         }
