@@ -31,7 +31,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
     hooks: {
       // 1. inject admin route
       "astro:config:setup": ({ injectRoute, injectScript, updateConfig, config }) => {
-
+        console.log("updating config")
         updateConfig({
           site: config.site || process.env.URL,
           vite: {
@@ -41,7 +41,8 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
             ],
           }
         });
-
+        console.log("vite plugins =", config.vite)
+        console.log("injecting route")
         injectRoute({
           pattern: adminRoute,
           entrypoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
