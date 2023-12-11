@@ -15,7 +15,7 @@ console.log(styles)
 	<body>
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 		{styles.map(style => (
-			<script is:inline>CMS.registerPreviewStyle("{style}");</script>
+			<script is:inline>CMS.registerPreviewStyle(`${style}`);</script>
 		  ))}
 	</body>
 </html>
