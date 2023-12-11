@@ -6,7 +6,8 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js"
 		},
-		"./src/admin.astro": "./src/admin.astro"
+		"./src/admin.astro": "./src/admin.astro",
+		"./decap-vite-plugin": "./dist/decap-vite-plugin.js"
 	},
 	"scripts": {
 		"build": "tsc"
@@ -19,6 +20,8 @@
 		"astro": "^2.0.0 || ^3.0.0"
 	},
 	"dependencies": {
-		"js-yaml": "^4.1.0"
+		"js-yaml": "^4.1.0",
+		"typescript": "^5.3.3",
+		"vite": "^5.0.7"
 	}
 }

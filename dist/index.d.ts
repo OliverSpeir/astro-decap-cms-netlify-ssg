@@ -3,7 +3,7 @@ import type { CmsConfig } from "./types";
 export interface DecapCMSOptions {
     adminRoute?: string;
     config?: CmsConfig;
-    styles?: string;
+    styles?: string[];
     templates?: string;
     injectWidget?: boolean;
 }

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
+import { injectCSSPlugin } from "./decap-vite-plugin";
 const defaultOptions = {
     adminRoute: "/admin",
     injectWidget: true,
@@ -23,46 +24,64 @@ export default function decapCMS(options) {
         name: "decap-cms",
         hooks: {
             // 1. inject admin route
-            "astro:config:setup": ({ injectRoute, injectScript }) => {
+            "astro:config:setup": ({ injectRoute, injectScript, updateConfig, config }) => {
+                var _a;
+                updateConfig: ({
+                    site: config.site || process.env.URL,
+                    vite: {
+                        plugins: [
+                            ...(((_a = config.vite) === null || _a === void 0 ? void 0 : _a.plugins) || []),
+                            injectCSSPlugin({ styles: styles })
+                        ],
+                    }
+                });
                 injectRoute({
                     pattern: adminRoute,
-                    entryPoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
+                    entrypoint: "astro-decap-cms-netlify-ssg/src/admin.astro",
                 });
                 // 2. inject indetity widget
                 // this should only be injected to / ( root of website )
                 // adds a script in this way for performance reasons ( module makes inline script )
                 if (injectWidget) {
                     injectScript("page", `
-            var script = document.createElement('script');
-            script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-            document.head.appendChild(script);
+            window.onload = function() {
+              var script = document.createElement('script');
+              script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+              document.head.appendChild(script);
+            };
         `);
                 }
                 // 3. inject styles
                 // this should only be injected to /admin
                 // styles is path to public css file 
                 // ideally would be able to get a way to get the styles astro applies to the page where the .md content is used 
-                if (styles) {
-                    injectScript("page", `<script>CMS.registerPreviewStyle(${styles});</script>`);
-                }
+                // if (styles) {
+                //   injectScript(
+                //     "page",
+                //     `CMS.registerPreviewStyle(${styles});`
+                //   );
+                // }
+                // create vite plugin ?
                 // 4. inject templates
                 // should only be injected to /admin
                 // hardcoded for now
                 // ideally would be able to build this createClass function programatically 
                 //  e.g accept and object of the widgets you want to add and classes you need applied to them 
                 // applying prose class only necessary for tailwind typography
-                if (templates) {
-                    injectScript("page", `
-          <script>
-          var CustomPreview = createClass({
-            render: function () {
-              var entry = this.props.entry;
-              return h("div", { className: "prose" }, this.props.widgetFor("body"));
-            },
-          });
-          CMS.registerPreviewTemplate("blog", CustomPreview);</script>
-          `);
-                }
+                // if (templates) {
+                //   injectScript(
+                //     "page",
+                //     `
+                //   var CustomPreview = createClass({
+                //     render: function () {
+                //       var entry = this.props.entry;
+                //       return h("div", { className: "prose" }, this.props.widgetFor("body"));
+                //     },
+                //   });
+                //   CMS.registerPreviewTemplate("blog", CustomPreview);
+                //   `
+                //   );
+                // }
             },
             // 4. create config
             // creates file yaml at /admin/config.yml from object passed to the integration
