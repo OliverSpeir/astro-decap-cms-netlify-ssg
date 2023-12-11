@@ -1,20 +1,20 @@
 ---
-// import { readFileSync } from 'fs';
-// import path from 'path';
+import { readFileSync } from 'fs';
+import path from 'path';
 import template from "virtual:astro-decap-cms/template";
 
 // Assuming you have the relative path in `templatePath`
 // You might need to adjust the path based on your project structure
-// const templatePath = `./${template}`;
-// let scriptContent = '';
+const templatePath = `./${template}`;
+let scriptContent = '';
 
-// try {
-//   const resolvedPath = path.resolve(templatePath);
-//   scriptContent = readFileSync(resolvedPath, 'utf-8');
-// } catch (error) {
-//   console.error('Error reading decap.js:', error.message);
-//   // Handle the error or set a fallback
-// }
+try {
+  const resolvedPath = path.resolve(templatePath);
+  scriptContent = readFileSync(resolvedPath, 'utf-8');
+} catch (error) {
+  console.error('Error reading decap.js:', error.message);
+  // Handle the error or set a fallback
+}
 
 ---
 
@@ -56,7 +56,14 @@ import template from "virtual:astro-decap-cms/template";
 				});
 			}
 		  </script> -->
-		  {template && <script src={await import(template)}></script>}
+		  <script define:vars={{ scriptContent }}>
+			// Now you can use `scriptContent` here
+			if (scriptContent) {
+			  const scriptTag = document.createElement('script');
+			  scriptTag.textContent = scriptContent;
+			  document.body.appendChild(scriptTag);
+			}
+		  </script>
 		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
