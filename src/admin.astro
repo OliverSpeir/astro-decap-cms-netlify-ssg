@@ -14,8 +14,13 @@ console.log(styles)
 	</head>
 	<body>
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-		{styles.map(style => (
-			<script is:inline>CMS.registerPreviewStyle(`${style}`);</script>
-		  ))}
+		<script type="module">
+			import styles from 'virtual:astro-decap-cms/styles';
+			styles.forEach(style => {
+			  const script = document.createElement('script');
+			  script.textContent = `CMS.registerPreviewStyle('${style}');`;
+			  document.body.appendChild(script);
+			});
+		  </script>
 	</body>
 </html>
