@@ -15,8 +15,10 @@ try {
   console.error('Error reading decap.js:', error.message);
   // Handle the error or set a fallback
 }
-console.log(scriptContent)
+
+const test = "alsfdkjalsdkfj"
 ---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -41,7 +43,7 @@ console.log(scriptContent)
 		<!-- <script src={template}></script>
 		
 		-->
-
+		<script define:vars={(scriptContent)}>`${scriptContent}`</script>
 		<!-- <script >
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
