@@ -43,7 +43,8 @@ const test = "alsfdkjalsdkfj"
 		<!-- <script src={template}></script>
 		
 		-->
-		<script define:vars={{content: scriptContent}}>{content}</script>
+		<script is:inline>{scriptContent}</script>
+
 		<!-- <script >
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
