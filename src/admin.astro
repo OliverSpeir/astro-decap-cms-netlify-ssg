@@ -1,40 +1,4 @@
----
-import template from "virtual:astro-decap-cms/template";
 
-// let module;
-// if (template) {
-//   import(template)
-//     .then((mod) => {
-//       module = mod;
-//       // You can now use the imported module
-//     })
-//     .catch((err) => {
-//       console.error('Failed to load module:', err);
-//     });
-// }
-// console.log(module)
-
-let scriptContent = '';
-
-if (template) {
-  const fetchScript = async () => {
-    try {
-      const response = await fetch(template);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch ${template}: ${response.status}`);
-      }
-      return await response.text();
-    } catch (error) {
-      console.error('Error fetching script:', error);
-      return '';
-    }
-  };
-
-  scriptContent = await fetchScript();
-}
-
-console.log(scriptContent)
----
 <!doctype html>
 <html lang="en">
 	<head>
@@ -55,13 +19,13 @@ console.log(scriptContent)
 				document.body.appendChild(script);
 			});
 		</script>
-		{console.log("template in body",template)}
+		<!-- {console.log("template in body",template)} -->
 		<!-- <script src={template}></script>
 		
 		-->
+		<script src="/decap-script.js"></script>
 
-
-		<script >
+		<!-- <script >
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
 			  fetch(template)
@@ -75,7 +39,7 @@ console.log(scriptContent)
 				  console.error('Error loading script:', error);
 				});
 			}
-		  </script>
+		  </script> -->
 		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
