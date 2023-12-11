@@ -5,10 +5,11 @@ import template from "virtual:astro-decap-cms/template";
 
 // Assuming you have the relative path in `templatePath`
 // You might need to adjust the path based on your project structure
+const templatePath = `./${template}`;
 let scriptContent = '';
 
 try {
-  const resolvedPath = path.resolve(template);
+  const resolvedPath = path.resolve(templatePath);
   scriptContent = readFileSync(resolvedPath, 'utf-8');
 } catch (error) {
   console.error('Error reading decap.js:', error.message);
