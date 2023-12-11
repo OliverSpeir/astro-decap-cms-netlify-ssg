@@ -1,18 +1,18 @@
 ---
 import template from "virtual:astro-decap-cms/template";
 
-let module;
-if (template) {
-  import(template)
-    .then((mod) => {
-      module = mod;
-      // You can now use the imported module
-    })
-    .catch((err) => {
-      console.error('Failed to load module:', err);
-    });
-}
-console.log(module)
+// let module;
+// if (template) {
+//   import(template)
+//     .then((mod) => {
+//       module = mod;
+//       // You can now use the imported module
+//     })
+//     .catch((err) => {
+//       console.error('Failed to load module:', err);
+//     });
+// }
+// console.log(module)
 ---
 <!doctype html>
 <html lang="en">
@@ -35,9 +35,26 @@ console.log(module)
 			});
 		</script>
 		{console.log("template in body",template)}
-		<!-- <script src=`${template}``></script> -->
+		<!-- <script src={template}></script>
+		
+		-->
 
 
+		<script >
+			import template from "virtual:astro-decap-cms/template";
+			if (template) {
+			  fetch(template)
+				.then(response => response.text())
+				.then(scriptText => {
+				  const script = document.createElement('script');
+				  script.textContent = scriptText;
+				  document.body.appendChild(script);
+				})
+				.catch(error => {
+				  console.error('Error loading script:', error);
+				});
+			}
+		  </script>
 		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
