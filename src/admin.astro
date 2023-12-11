@@ -56,7 +56,7 @@ import template from "virtual:astro-decap-cms/template";
 				});
 			}
 		  </script> -->
-		  {template && <script src={template}></script>}
+		  {template && <script src={await import(template)}></script>}
 		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
