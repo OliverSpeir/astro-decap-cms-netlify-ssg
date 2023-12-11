@@ -10,7 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
-import { injectCSSPlugin } from "./decap-vite-plugin.js";
+import { injectCSSPlugin } from "./decap-vite-plugin-styles.js";
+import { injectTemplatePlugin } from "./decap-vite-plugin-templates";
 const defaultOptions = {
     adminRoute: "/admin",
     injectWidget: true,
@@ -32,7 +33,8 @@ export default function decapCMS(options) {
                     vite: {
                         plugins: [
                             ...(((_a = config.vite) === null || _a === void 0 ? void 0 : _a.plugins) || []),
-                            injectCSSPlugin(styles)
+                            injectCSSPlugin(styles),
+                            injectTemplatePlugin(templates)
                         ],
                     }
                 });
@@ -54,37 +56,12 @@ export default function decapCMS(options) {
             };
         `);
                 }
-                // 3. inject styles
-                // this should only be injected to /admin
-                // styles is path to public css file 
-                // ideally would be able to get a way to get the styles astro applies to the page where the .md content is used 
-                // if (styles) {
-                //   injectScript(
-                //     "page",
-                //     `CMS.registerPreviewStyle(${styles});`
-                //   );
-                // }
-                // create vite plugin ?
                 // 4. inject templates
                 // should only be injected to /admin
                 // hardcoded for now
                 // ideally would be able to build this createClass function programatically 
                 //  e.g accept and object of the widgets you want to add and classes you need applied to them 
                 // applying prose class only necessary for tailwind typography
-                // if (templates) {
-                //   injectScript(
-                //     "page",
-                //     `
-                //   var CustomPreview = createClass({
-                //     render: function () {
-                //       var entry = this.props.entry;
-                //       return h("div", { className: "prose" }, this.props.widgetFor("body"));
-                //     },
-                //   });
-                //   CMS.registerPreviewTemplate("blog", CustomPreview);
-                //   `
-                //   );
-                // }
             },
             // 4. create config
             // creates file yaml at /admin/config.yml from object passed to the integration

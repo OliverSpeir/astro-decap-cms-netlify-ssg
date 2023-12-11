@@ -1,8 +1,3 @@
----
-import styles from 'virtual:astro-decap-cms/styles';
-console.log(styles)
----
-
 <!doctype html>
 <html lang="en">
 	<head>
@@ -13,14 +8,24 @@ console.log(styles)
 		<title>Content Manager</title>
 	</head>
 	<body>
-		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"
+		></script>
 		<script>
-			import styles from 'virtual:astro-decap-cms/styles';
-			styles.forEach(style => {
-			  const script = document.createElement('script');
-			  script.textContent = `CMS.registerPreviewStyle('${style}');`;
-			  document.body.appendChild(script);
+			import styles from "virtual:astro-decap-cms/styles";
+			styles.forEach((style) => {
+				const script = document.createElement("script");
+				script.textContent = `CMS.registerPreviewStyle('${style}');`;
+				document.body.appendChild(script);
 			});
-		  </script>
+		</script>
+
+		<script>
+			import template from "virtual:astro-decap-cms/template";
+			if (template) {
+				const script = document.createElement("script");
+				script.src = template;
+				document.body.appendChild(script);
+			}
+		</script>
 	</body>
 </html>
