@@ -31,13 +31,13 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
     hooks: {
       // 1. inject admin route
       "astro:config:setup": ({ injectRoute, injectScript, updateConfig, config }) => {
-        
-        updateConfig: ({
+
+        updateConfig({
           site: config.site || process.env.URL,
           vite: {
             plugins: [
               ...(config.vite?.plugins || []),
-              injectCSSPlugin({styles: styles})
+              injectCSSPlugin({ styles: styles })
             ],
           }
         });

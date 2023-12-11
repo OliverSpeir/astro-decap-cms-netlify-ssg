@@ -26,7 +26,7 @@ export default function decapCMS(options) {
             // 1. inject admin route
             "astro:config:setup": ({ injectRoute, injectScript, updateConfig, config }) => {
                 var _a;
-                updateConfig: ({
+                updateConfig({
                     site: config.site || process.env.URL,
                     vite: {
                         plugins: [
