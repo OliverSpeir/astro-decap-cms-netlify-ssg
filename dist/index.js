@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
-import { injectCSSPlugin } from "./decap-vite-plugin";
+import { injectCSSPlugin } from "./decap-vite-plugin.js";
 const defaultOptions = {
     adminRoute: "/admin",
     injectWidget: true,

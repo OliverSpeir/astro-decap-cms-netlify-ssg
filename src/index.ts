@@ -3,7 +3,7 @@ import type { CmsConfig } from "./types";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
-import { injectCSSPlugin } from "./decap-vite-plugin";
+import { injectCSSPlugin } from "./decap-vite-plugin.js";
 
 export interface DecapCMSOptions {
   adminRoute?: string;
