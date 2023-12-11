@@ -11,7 +11,7 @@ import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dump } from "js-yaml";
 import { injectCSSPlugin } from "./decap-vite-plugin-styles.js";
-import { injectTemplatePlugin } from "./decap-vite-plugin-templates";
+import { injectTemplatePlugin } from "./decap-vite-plugin-templates.js";
 const defaultOptions = {
     adminRoute: "/admin",
     injectWidget: true,
