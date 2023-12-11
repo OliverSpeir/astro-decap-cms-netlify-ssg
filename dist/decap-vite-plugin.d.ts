@@ -1,6 +1,2 @@
 import { Plugin } from 'vite';
-interface AstroCssPluginOptions {
-    styles: string[];
-}
-export declare function injectCSSPlugin(options: AstroCssPluginOptions): Plugin;
-export {};
+export declare function injectCSSPlugin(styles: string[]): Plugin;

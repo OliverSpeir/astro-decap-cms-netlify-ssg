@@ -32,7 +32,7 @@ export default function decapCMS(options) {
                     vite: {
                         plugins: [
                             ...(((_a = config.vite) === null || _a === void 0 ? void 0 : _a.plugins) || []),
-                            injectCSSPlugin({ styles: styles })
+                            injectCSSPlugin(styles)
                         ],
                     }
                 });

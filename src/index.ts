@@ -37,7 +37,7 @@ export default function decapCMS(options?: DecapCMSOptions): AstroIntegration {
           vite: {
             plugins: [
               ...(config.vite?.plugins || []),
-              injectCSSPlugin({ styles: styles })
+              injectCSSPlugin(styles)
             ],
           }
         });

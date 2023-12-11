@@ -1,23 +1,20 @@
 import { Plugin } from 'vite';
 
-interface AstroCssPluginOptions {
-    styles: string[];
-  }
+const virtualModuleId = 'virtual:astro-decap-cms/styles';
+const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
-  export function injectCSSPlugin(options: AstroCssPluginOptions): Plugin {
-    return {
-      name: 'inject-css',
-      transformIndexHtml(html, { filename }) {
-        if (filename.endsWith('admin.astro') && options.styles) {
-          const stylesArray = Array.isArray(options.styles) ? options.styles : [options.styles];
-          const injectedScripts = stylesArray.map(style => 
-            `<script>CMS.registerPreviewStyle("${style}");</script>`
-          ).join('');
-  
-          return html.replace('</body>', `${injectedScripts}</body>`);
-        }
-        return html;
+export function injectCSSPlugin(styles: string[]): Plugin {
+  return {
+    name: 'vite-plugin-decap-cms-styles',
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId;
       }
-    };
-  }
-  
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export default ${JSON.stringify(styles)};`;
+      }
+    }
+  };
+}
