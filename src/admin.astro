@@ -13,6 +13,27 @@ import template from "virtual:astro-decap-cms/template";
 //     });
 // }
 // console.log(module)
+
+let scriptContent = '';
+
+if (template) {
+  const fetchScript = async () => {
+    try {
+      const response = await fetch(template);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${template}: ${response.status}`);
+      }
+      return await response.text();
+    } catch (error) {
+      console.error('Error fetching script:', error);
+      return '';
+    }
+  };
+
+  scriptContent = await fetchScript();
+}
+
+console.log(scriptContent)
 ---
 <!doctype html>
 <html lang="en">
