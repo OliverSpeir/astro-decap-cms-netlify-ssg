@@ -1,3 +1,7 @@
+---
+import template from "virtual:astro-decap-cms/template";
+console.log("template in frontmatter",template)
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -18,14 +22,16 @@
 				document.body.appendChild(script);
 			});
 		</script>
+		{console.log("template in body",template)}
+		<script src=`${template}``></script>
 
-		<script>
+		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
 			if (template) {
 				const script = document.createElement("script");
 				script.src = template;
 				document.body.appendChild(script);
 			}
-		</script>
+		</script> -->
 	</body>
 </html>
