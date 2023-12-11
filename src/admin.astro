@@ -23,7 +23,19 @@ console.log("template in frontmatter",template)
 			});
 		</script>
 		{console.log("template in body",template)}
-		<!-- <script src=`${template}`></script> -->
+		<!-- <script src=`${template}``></script> -->
+
+		<script>
+			import template from "virtual:astro-decap-cms/template";
+			if (template) {
+			  import(template).then(module => {
+				// Use the imported module as needed
+				console.log('Template module loaded', module);
+			  }).catch(error => {
+				console.error('Error loading template module:', error);
+			  });
+			}
+		  </script>
 
 		<!-- <script>
 			import template from "virtual:astro-decap-cms/template";
